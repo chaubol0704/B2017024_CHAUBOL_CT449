@@ -125,6 +125,9 @@ const getAllProduct = (limit, page, sort, filter, category) => {
         try {
             const totalProduct = await Product.count()
             let allProduct = []
+            // limit = 6
+            // if(page) page = page-1
+            console.log(page)
             if (category != 'all' && category) {
                 // console.log(category)
                 const allObjectFilter = await Product.find({ category: category }).limit(limit).skip(page * limit).sort({ createdAt: -1, updatedAt: -1 })

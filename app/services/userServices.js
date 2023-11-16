@@ -135,7 +135,7 @@ const deleteUser = (id) => {
 const getAllUser = () => {
     return new Promise(async (resolve, reject) => {
         try {
-            const allUser = await User.find().sort({ createdAt: -1, updatedAt: -1 })
+            const allUser = await User.find({ isAdmin: false}).sort({ createdAt: -1, updatedAt: -1 })
             resolve({
                 status: 'OK',
                 message: 'Success',
