@@ -11,6 +11,7 @@ const createOrder = (newOrder) => {
                 user_id: id,
                 address: address,
                 totalcost,
+                duyet: false
                 // orderedAt, deliveredAt, 
                 // status,
             })
@@ -29,6 +30,7 @@ const createOrder = (newOrder) => {
                     quantity: product.quantity,
                     price: product.price,
                     discount: product.discount
+
                 })
             }
             if (newOrder) {
@@ -130,9 +132,10 @@ const getDetailsOrder = (id) => {
     })
 }
 
-const getAllOrder = (limit, page, sort, filter) => {
+const getAllOrder = (data,limit, page, sort, filter) => {
     return new Promise(async (resolve, reject) => {
         try {
+            console.log(data)
             const totalOrder = await Order.count()
             let allOrder = []
             if (filter) {
@@ -150,7 +153,7 @@ const getAllOrder = (limit, page, sort, filter) => {
             if (sort) {
                 const objectSort = {}
                 objectSort[sort[1]] = sort[0]
-                const allOrderSort = await Order.find().populate("user_id").limit(limit).skip(page * limit).sort(objectSort).sort({ createdAt: -1, updatedAt: -1 })
+                const allOrderSort = await Order.find({duyet: data}).populate("user_id").limit(limit).skip(page * limit).sort(objectSort).sort({ createdAt: -1, updatedAt: -1 })
                 resolve({
                     status: 'OK',
                     message: 'Success',
@@ -161,9 +164,9 @@ const getAllOrder = (limit, page, sort, filter) => {
                 })
             }
             if (!limit) {
-                allOrder = await Order.find().populate("user_id").sort({ createdAt: -1, updatedAt: -1 })
+                allOrder = await Order.find({duyet: data}).populate("user_id").sort({ createdAt: -1, updatedAt: -1 })
             } else {
-                allOrder = await Order.find().populate("user_id")
+                allOrder = await Order.find({duyet: data}).populate("user_id")
             }
             resolve({
                 status: 'OK',

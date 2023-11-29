@@ -28,6 +28,9 @@ const orderSchema = new mongoose.Schema({
     },
     status: {
         type: String
+    },
+    duyet:{
+        type: Boolean
     }
 
 }, {

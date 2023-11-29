@@ -80,8 +80,9 @@ const deleteOrder = async (req, res) => {
 
 const getAllOrder = async (req, res) => {
     try {
-        const { limit, page, sort, filter } = req.query
-        const response = await OrderService.getAllOrder(Number(limit) || null, Number(page) || 0, sort, filter)
+        const { data,limit, page, sort, filter } = req.query
+        // const data = req.body
+        const response = await OrderService.getAllOrder(data,Number(limit) || null, Number(page) || 0, sort, filter)
         return res.status(200).json(response)
     } catch (e) {
         return res.status(404).json({
